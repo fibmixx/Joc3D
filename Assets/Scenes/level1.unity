@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 283824548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 1.1, z: 5}
+  m_LocalPosition: {x: 3, y: 1.1, z: 7}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -444,7 +444,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0.25964758, y: -0.09635386, z: -0.03365454, w: -0.96029496}
-  m_LocalPosition: {x: 9.61, y: 5.02, z: -0.58}
+  m_LocalPosition: {x: 7.21, y: 10.83, z: -10.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -801,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a20c07fdf591f46b85b92337650019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 4900000, guid: 3e73ceb0d4b118243a2a55261ab02675, type: 3}
+  map: {fileID: 4900000, guid: a9aae80ccdc97f240bc217a58701de61, type: 3}
   tile: {fileID: 7189405941443868808, guid: e50dcff8f139adb4bb9392b89156f777, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 // moveRectangle manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
@@ -11,6 +12,9 @@ public class moveRectangle : MonoBehaviour
 {
     bool bMoving = false;           // Is the object in the middle of moving?
     bool bFalling = false;          // Is the object falling?
+
+    Vector3 startPos;
+    Quaternion startRot;
 
     public float rotSpeed; 			// Rotation speed in degrees per second
     public float fallSpeed; 		// Fall speed in the Y direction
@@ -23,48 +27,46 @@ public class moveRectangle : MonoBehaviour
     public AudioClip[] sounds; 		// Sounds to play when the cube rotates
     public AudioClip fallSound;     // Sound to play when the cube starts falling
 
+    public int state = 0; // State of the rectangle
+    // 0 = Vertical, 1 = X axis, 2 = Z Axis
+    float timer;
+    public bool win = false;
+    public string nextSceneName;
 
     // Determine if the cube is grounded by shooting a ray down from the cube location and 
     // looking for hits with ground tiles
-
     bool isGrounded()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.0f, layerMask))
-            return true;
+{
+    Vector3 pos = transform.position;
+    float rayDist = 1.5f;  // una mica més llarg que 1.0
 
-        return false;
+    Vector3[] offsets = new Vector3[]
+    {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+    
+    foreach (var o in offsets)
+    {
+        if (!Physics.Raycast(pos + o, Vector3.down, rayDist, layerMask))
+            return false;
     }
-    private const float ROT_TOLERANCE = 0.01f;
-    private bool IsApprox(float a, float b)
+
+    return true;
+}
+
+    void Restart()
     {
-        return Mathf.Abs(a - b) < ROT_TOLERANCE;
-    }
-
-    // The cube is 'vertical' if its local up direction is aligned with the world up direction.
-    bool isVertical()
-    {
-        return Vector3.Dot(transform.up, Vector3.up) > 0.99f;
-    }
-
-    // Checks if the next 90-degree rotation will result in the cube standing upright (vertical)
-    // **IMPROVED:** Uses safe float comparison.
-    bool willBeVertical(Vector3 axis)
-    {
-        // Calculate the projected angle for X and Z
-        Vector3 rot = transform.eulerAngles;
-        float projectedX = (rot.x + axis.x * 90f);
-        float projectedZ = (rot.z + axis.z * 90f);
-
-        // Normalize the angle to the 0-180 range. 
-        float normalizedX = projectedX % 180f;
-        float normalizedZ = projectedZ % 180f;
-
-        // Check if the remainder is approximately 0 (meaning it lands flat on the X/Z plane)
-        bool xIsFlat = IsApprox(normalizedX, 0f) || IsApprox(normalizedX, 180f);
-        bool zIsFlat = IsApprox(normalizedZ, 0f) || IsApprox(normalizedZ, 180f);
-
-        return xIsFlat && zIsFlat;
+        transform.position = startPos;
+        transform.rotation = startRot;
+        bMoving = false;
+        bFalling = false;
+        rotRemainder = 0;
+        win = false;
+        state = 0;
+        timer = 0.0f;
     }
 
     // Start is called once after the MonoBehaviour is created
@@ -72,15 +74,34 @@ public class moveRectangle : MonoBehaviour
     {
         // Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
         layerMask = LayerMask.GetMask("Ground");
+        state = 0;
+        win = false;
+        timer = 0.0f;
+        startPos = transform.position;
+        startRot = transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+            Restart();
         if (bFalling)
         {
             // If we have fallen, we just move down
             transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+            if (transform.position.y < -10f)
+                Restart();
+        }
+        else if (win)
+        {
+            timer += Time.deltaTime;
+            transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+            if (timer >= 2.0f)
+            {
+                timer = 0f; 
+                SceneManager.LoadScene(nextSceneName);
+            }
         }
         else if (bMoving)
         {
@@ -108,11 +129,10 @@ public class moveRectangle : MonoBehaviour
                 // Play sound associated to falling
                 AudioSource.PlayClipAtPoint(fallSound, transform.position, 1.5f);
             }
-
             // Read the move action for input
             Vector2 dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             dir.Normalize();
-            Debug.Log(dir);
+            
             if (Math.Abs(dir.x) > 0.99 || Math.Abs(dir.y) > 0.99)
             {
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
@@ -121,8 +141,8 @@ public class moveRectangle : MonoBehaviour
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);
                 AudioSource.PlayClipAtPoint(sounds[iSound], transform.position, 1.0f);
-                Debug.Log(isVertical());
-                if (isVertical())
+
+                if (state == 0) // Vertical
                 {
                     if (dir.x > 0.99)
                     {
@@ -130,6 +150,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(0.5f, -1.0f, 0.0f);
+                        state = 1;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -137,6 +158,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-0.5f, -1.0f, 0.0f);
+                        state = 1;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -144,6 +166,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, 0.5f);
+                        state = 2;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -151,9 +174,10 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, -0.5f);
+                        state = 2;
                     }
                 }
-                else
+                else if (state == 1) // eix X
                 {
                     // Set rotDir, rotRemainder, rotPoint, and rotAxis according to the movement the player wants to make
                     if (dir.x > 0.99)
@@ -161,32 +185,64 @@ public class moveRectangle : MonoBehaviour
                         rotDir = -1.0f;
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
-                        if (willBeVertical(rotAxis)) rotPoint = transform.position + new Vector3(1.0f, -0.5f, 0.0f);
-                        else rotPoint = transform.position + new Vector3(0.5f, -0.5f, 0.0f);
+                        rotPoint = transform.position + new Vector3(1.0f, -0.5f, 0.0f);
+                        state = 0;
                     }
                     else if (dir.x < -0.99)
                     {
                         rotDir = 1.0f;
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
-                        if (willBeVertical(rotAxis)) rotPoint = transform.position + new Vector3(-1.0f, -0.5f, 0.0f);
-                        else rotPoint = transform.position + new Vector3(-0.5f, -0.5f, 0.0f);
+                        rotPoint = transform.position + new Vector3(-1.0f, -0.5f, 0.0f);
+                        state = 0;
                     }
                     else if (dir.y > 0.99)
                     {
                         rotDir = 1.0f;
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
-                        if (willBeVertical(rotAxis)) rotPoint = transform.position + new Vector3(0.0f, -0.5f, 1.0f);
-                        else rotPoint = transform.position + new Vector3(0.0f, -0.5f, 0.5f);
+                        rotPoint = transform.position + new Vector3(0.0f, -0.5f, 0.5f);
                     }
                     else if (dir.y < -0.99)
                     {
                         rotDir = -1.0f;
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
-                        if (willBeVertical(rotAxis)) rotPoint = transform.position + new Vector3(0.0f, -0.5f, -1.0f);
-                        else rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
+                        rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
+                    }
+                }
+                else // eix Z
+                {
+                    // Set rotDir, rotRemainder, rotPoint, and rotAxis according to the movement the player wants to make
+                    if (dir.x > 0.99)
+                    {
+                        rotDir = -1.0f;
+                        rotRemainder = 90.0f;
+                        rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
+                        rotPoint = transform.position + new Vector3(0.5f, -0.5f, 0.0f);
+                    }
+                    else if (dir.x < -0.99)
+                    {
+                        rotDir = 1.0f;
+                        rotRemainder = 90.0f;
+                        rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
+                        rotPoint = transform.position + new Vector3(-0.5f, -0.5f, 0.0f);
+                    }
+                    else if (dir.y > 0.99)
+                    {
+                        rotDir = 1.0f;
+                        rotRemainder = 90.0f;
+                        rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
+                        rotPoint = transform.position + new Vector3(0.0f, -0.5f, 1.0f);
+                        state = 0;
+                    }
+                    else if (dir.y < -0.99)
+                    {
+                        rotDir = -1.0f;
+                        rotRemainder = 90.0f;
+                        rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
+                        rotPoint = transform.position + new Vector3(0.0f, -0.5f, -1.0f);
+                        state = 0;
                     }
                 }
             }
