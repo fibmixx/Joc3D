@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class moveRectangle : MonoBehaviour
 {
-    bool bMoving = false;           // Is the object in the middle of moving?
+    public bool bMoving = false;    // Is the object in the middle of moving? DEJAR EN FALSE
     bool bFalling = false;          // Is the object falling?
 
     Vector3 startPos;
@@ -27,10 +27,11 @@ public class moveRectangle : MonoBehaviour
     public AudioClip[] sounds; 		// Sounds to play when the cube rotates
     public AudioClip fallSound;     // Sound to play when the cube starts falling
 
-    public int state = 0; // State of the rectangle
+    public int state = 0; // State of the rectangle DEJAR EN 0
     // 0 = Vertical, 1 = X axis, 2 = Z Axis
+    int nextstate = 0;
     float timer;
-    public bool win = false;
+    public bool win = false; //DEJAR EN FALSE
     public string nextSceneName;
 
     // Determine if the cube is grounded by shooting a ray down from the cube location and 
@@ -112,6 +113,7 @@ public class moveRectangle : MonoBehaviour
             {
                 transform.RotateAround(rotPoint, rotAxis, rotRemainder * rotDir);
                 bMoving = false;
+                state = nextstate;
             }
             else
             {
@@ -150,7 +152,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(0.5f, -1.0f, 0.0f);
-                        state = 1;
+                        nextstate = 1;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -158,7 +160,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-0.5f, -1.0f, 0.0f);
-                        state = 1;
+                        nextstate = 1;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -166,7 +168,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, 0.5f);
-                        state = 2;
+                        nextstate = 2;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -174,7 +176,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, -0.5f);
-                        state = 2;
+                        nextstate = 2;
                     }
                 }
                 else if (state == 1) // eix X
@@ -186,7 +188,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(1.0f, -0.5f, 0.0f);
-                        state = 0;
+                        nextstate = 0;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -194,7 +196,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-1.0f, -0.5f, 0.0f);
-                        state = 0;
+                        nextstate = 0;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -234,7 +236,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, 1.0f);
-                        state = 0;
+                        nextstate = 0;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -242,7 +244,7 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, -1.0f);
-                        state = 0;
+                        nextstate = 0;
                     }
                 }
             }

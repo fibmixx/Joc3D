@@ -25,7 +25,7 @@ public class EntrarEntrada : MonoBehaviour
 
             if (cube != null)        // si lo tiene, es el cubo
             {
-                if (cube.state == 0) // comprobamos el state
+                if (cube.state == 0 && cube.bMoving == false) // comprobamos el state y que no se este moviendo
                 {
                     cube.win = true;
                 }
