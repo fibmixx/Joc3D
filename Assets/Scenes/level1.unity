@@ -168,17 +168,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ecdc9930244680c4e86436840d87a6e5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecdc9930244680c4e86436840d87a6e5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecdc9930244680c4e86436840d87a6e5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecdc9930244680c4e86436840d87a6e5,
         type: 3}
@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 283824550}
   - component: {fileID: 283824549}
   - component: {fileID: 283824553}
+  - component: {fileID: 283824554}
   m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
@@ -311,8 +312,8 @@ Transform:
   m_GameObject: {fileID: 283824548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 0.5, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3, y: 1.1, z: 7}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 37416661}
@@ -325,7 +326,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283824548}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6831bfb1b9e82da4696ec90aad0239da, type: 3}
   m_Name: 
@@ -338,6 +339,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10b7f35470b5aa44d9e37642cd1fa8a7, type: 3}
   - {fileID: 8300000, guid: 4777373ff62c7a941b137ea300501eeb, type: 3}
   fallSound: {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
+--- !u!114 &283824554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283824548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d4458974a83634fa67f7d0aa8f257d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotSpeed: 240
+  fallSpeed: 10
+  sounds:
+  - {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
+  fallSound: {fileID: 8300000, guid: 2b4430ab3b1fe604180fb7133f9b3634, type: 3}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +418,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -425,13 +443,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.36928636, y: 0.017280681, z: -0.006868379, w: -0.92912966}
-  m_LocalPosition: {x: 11.565201, y: 5.11732, z: -0.636137}
+  m_LocalRotation: {x: -0.25964758, y: -0.09635386, z: -0.03365454, w: -0.96029496}
+  m_LocalPosition: {x: 7.21, y: 10.83, z: -10.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.485, y: 13.454, z: 7.57}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a20c07fdf591f46b85b92337650019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 4900000, guid: 3e73ceb0d4b118243a2a55261ab02675, type: 3}
+  map: {fileID: 4900000, guid: a9aae80ccdc97f240bc217a58701de61, type: 3}
   tile: {fileID: 7189405941443868808, guid: e50dcff8f139adb4bb9392b89156f777, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
