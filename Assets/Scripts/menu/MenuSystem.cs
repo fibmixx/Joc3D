@@ -5,7 +5,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewBehaviourScript : MonoBehaviour
+public class MenuSystem : MonoBehaviour
 {
     public void StartGame()
     {
@@ -16,5 +16,10 @@ public class NewBehaviourScript : MonoBehaviour
     {
         UnityEngine.Debug.Log("QUIT!");
         Application.Quit();
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("menu");
     }
 }
