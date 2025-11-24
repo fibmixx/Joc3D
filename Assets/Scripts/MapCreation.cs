@@ -34,7 +34,7 @@ public class MapCreation : MonoBehaviour
         // Process the map. For each tileId == 2 create a copy of the tile prefab
         for (int z = 0; z < sizeZ; z++)
         {
-            int realZ = sizeZ - 1 - z;
+            int realZ = sizeZ - 1 - z;//no del reves
             for (int x = 0; x < sizeX; x++)
             {
                 if (nums[z * sizeX + x + 2] == 2)
