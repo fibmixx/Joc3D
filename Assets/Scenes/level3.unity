@@ -567,9 +567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a20c07fdf591f46b85b92337650019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 4900000, guid: 2bc9931329e67f8418b0af28b735f53a, type: 3}
+  map: {fileID: 4900000, guid: 21a262e710420ff40a754580e608a19c, type: 3}
   tile: {fileID: 7189405941443868808, guid: e50dcff8f139adb4bb9392b89156f777, type: 3}
-  tileOrange: {fileID: 0}
+  tileOrange: {fileID: 7189405941443868808, guid: 6074fba60df0b75449acae8243e1668a,
+    type: 3}
 --- !u!1001 &2672157302546067607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -581,7 +582,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
@@ -591,7 +592,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
@@ -649,7 +650,7 @@ PrefabInstance:
     - target: {fileID: 4697684497645886452, guid: 2fa02280c420e6c4b89b38734c1dc35e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4697684497645886452, guid: 2fa02280c420e6c4b89b38734c1dc35e,
         type: 3}
@@ -659,7 +660,7 @@ PrefabInstance:
     - target: {fileID: 4697684497645886452, guid: 2fa02280c420e6c4b89b38734c1dc35e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4697684497645886452, guid: 2fa02280c420e6c4b89b38734c1dc35e,
         type: 3}
