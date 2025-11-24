@@ -11,6 +11,9 @@ public class MapCreation : MonoBehaviour
     public TextAsset map; 		// Text file containing the map
     public GameObject tile; 	// Tile prefab used to instance and build the level
     public GameObject tileOrange;    // Orange tile prefab
+    public GameObject tileRodo;      // Rodo tile prefab
+    public GameObject tileCreu;
+    public GameObject tileEntrada;
 
     // Start is called once after the MonoBehaviour is created
     void Start()
@@ -55,6 +58,35 @@ public class MapCreation : MonoBehaviour
                 {
                     GameObject obj = Instantiate(tileOrange, new Vector3(x, -0.05f, realZ), transform.rotation);
                     obj.transform.parent = transform;
+                }
+
+                if (id == 4) //boto entrada
+                {
+                    
+                    GameObject obj = Instantiate(tileEntrada, new Vector3(x, -0.05f, realZ), transform.rotation);
+                    obj.transform.parent = transform;
+                }
+
+                if (id == 5) //boto rodo pont
+                {
+                    GameObject obj = Instantiate(tileRodo, new Vector3(x, 0.05f, realZ), transform.rotation);
+                    obj.transform.parent = transform;
+
+                    GameObject obj2 = Instantiate(tile, new Vector3(x, -0.05f, realZ), transform.rotation);
+                    obj2.transform.parent = transform;
+                }
+
+                else if (id == 6 ) //boto creu pont
+                {
+
+                    Quaternion rot = transform.rotation * Quaternion.Euler(0, 45, 0); //rotacio 45 graus
+
+                    GameObject obj = Instantiate(tileCreu, new Vector3(x, 0.05f, realZ), rot);
+                    obj.transform.parent = transform;
+
+
+                    GameObject obj2 = Instantiate(tile, new Vector3(x, -0.05f, realZ), transform.rotation);
+                    obj2.transform.parent = transform;
                 }
             }
         }
