@@ -30,21 +30,25 @@ public class MapCreation : MonoBehaviour
 		
 		// Create the level. First get the size in tiles of the map from nums
         int sizeX = nums[0], sizeZ = nums[1];
-		
-		// Process the map. For each tileId == 2 create a copy of the tile prefab
-        for(int z=0; z<sizeZ; z++)
-            for(int x=0; x<sizeX; x++)
+
+        // Process the map. For each tileId == 2 create a copy of the tile prefab
+        for (int z = 0; z < sizeZ; z++)
+        {
+            int realZ = sizeZ - 1 - z;
+            for (int x = 0; x < sizeX; x++)
             {
                 if (nums[z * sizeX + x + 2] == 2)
                 {
                     // Instantiate the copy at its corresponding location
                     //Instantiate(tile, new Vector3(x, 0.0f, z), transform.rotation);
-                    GameObject obj = Instantiate(tile, new Vector3(x, -0.05f, z), transform.rotation);
-					
-					// Set the new object parent to be the game object containing this script
+                    GameObject obj = Instantiate(tile, new Vector3(x, -0.05f, realZ), transform.rotation);
+
+
+                    // Set the new object parent to be the game object containing this script
                     obj.transform.parent = transform;
                 }
             }
+        }
     }
 
 }
