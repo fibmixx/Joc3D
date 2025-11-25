@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class moveRectangle : MonoBehaviour
 {
     public bool bMoving = false;    // Is the object in the middle of moving? DEJAR EN FALSE
-    bool bFalling = false;          // Is the object falling?
+    public bool bFalling = false;          // Is the object falling?
 
     Vector3 startPos;
     Quaternion startRot;
@@ -29,6 +29,7 @@ public class moveRectangle : MonoBehaviour
 
     public int state = 0; // State of the rectangle DEJAR EN 0
     // 0 = Vertical, 1 = X axis, 2 = Z Axis
+
     int nextstate = 0;
     float timer;
     public bool win = false; //DEJAR EN FALSE
