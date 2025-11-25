@@ -34,6 +34,8 @@ public class moveRectangle : MonoBehaviour
     float timer;
     public bool win = false; //DEJAR EN FALSE
     public string nextSceneName;
+    public TileType.Type tileType;
+
 
     // Determine if the cube is grounded by shooting a ray down from the cube location and 
     // looking for hits with ground tiles
@@ -58,6 +60,34 @@ public class moveRectangle : MonoBehaviour
 
     return true;
 }
+
+
+    TileType.Type GetGroundType()
+    {
+        Vector3 pos = transform.position;
+        float rayDist = 1.5f;
+
+        Vector3[] offsets =
+        {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        foreach (var o in offsets)
+        {
+            if (Physics.Raycast(pos + o, Vector3.down, out RaycastHit hit, rayDist, layerMask))
+            {
+                TileType t = hit.collider.GetComponent<TileType>();
+                if (t != null)
+                    return t.tileType;
+            }
+        }
+
+        return TileType.Type.Normal;
+    }
+
 
     void Restart()
     {
@@ -86,8 +116,11 @@ public class moveRectangle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
+
+
         if (bFalling)
         {
             // If we have fallen, we just move down
@@ -115,6 +148,7 @@ public class moveRectangle : MonoBehaviour
                 transform.RotateAround(rotPoint, rotAxis, rotRemainder * rotDir);
                 bMoving = false;
                 state = nextstate;
+                typeOfTile();
             }
             else
             {
@@ -179,6 +213,7 @@ public class moveRectangle : MonoBehaviour
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, -0.5f);
                         nextstate = 2;
                     }
+
                 }
                 else if (state == 1) // eix X
                 {
@@ -247,9 +282,21 @@ public class moveRectangle : MonoBehaviour
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, -1.0f);
                         nextstate = 0;
                     }
+
+                    
                 }
             }
         }
     }
+    void typeOfTile()
+    {
+        tileType = GetGroundType();
+        if (state == 0)
+        {
+            if (tileType == TileType.Type.Orange) bFalling = true;
+        }
+       
+    }
+   
 
 }
