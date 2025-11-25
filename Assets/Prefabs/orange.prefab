@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5006191287908559916}
   - component: {fileID: 4047126980848829230}
   - component: {fileID: -6766688765356669700}
+  - component: {fileID: 2781631047036287267}
   m_Layer: 3
   m_Name: orange
   m_TagString: Untagged
@@ -105,3 +106,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2781631047036287267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7189405941443868808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895cf7242b1ae2d49957398d32198536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileType: 1
