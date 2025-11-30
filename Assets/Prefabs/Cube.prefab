@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9057439117370908956}
   - component: {fileID: 6799087503451786679}
   - component: {fileID: 6787393243620124394}
+  - component: {fileID: 3518129628204670893}
   m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bMoving: 0
+  bFalling: 0
   rotSpeed: 240
   fallSpeed: 10
   sounds:
@@ -149,6 +151,20 @@ MonoBehaviour:
   state: 0
   win: 0
   nextSceneName: level1
+  tileType: 0
+--- !u!114 &3518129628204670893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2463159668637317035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5adc0ace3671cc74cb2017769d79c197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startOffset: 10
 --- !u!1001 &6889301386041330412
 PrefabInstance:
   m_ObjectHideFlags: 0
