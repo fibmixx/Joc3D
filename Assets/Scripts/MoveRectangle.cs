@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
@@ -35,6 +37,8 @@ public class moveRectangle : MonoBehaviour
     public bool win = false; //DEJAR EN FALSE
     public string nextSceneName;
     public TileType.Type tileType;
+    
+    float timerStart = 0.0f;
 
 
     // Determine if the cube is grounded by shooting a ray down from the cube location and 
@@ -42,7 +46,7 @@ public class moveRectangle : MonoBehaviour
     bool isGrounded()
 {
     Vector3 pos = transform.position;
-    float rayDist = 1.5f;  // una mica més llarg que 1.0
+    float rayDist = 10f;  // una mica més llarg que 1.0
 
     Vector3[] offsets = new Vector3[]
     {
@@ -99,6 +103,7 @@ public class moveRectangle : MonoBehaviour
         win = false;
         state = 0;
         timer = 0.0f;
+        timerStart = 0.0f;
     }
 
     // Start is called once after the MonoBehaviour is created
@@ -109,14 +114,18 @@ public class moveRectangle : MonoBehaviour
         state = 0;
         win = false;
         timer = 0.0f;
-        startPos = transform.position;
+        timerStart = 0.0f;
         startRot = transform.rotation;
+        startPos = new Vector3(transform.position.x, 1.1f, transform.position.z);
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        timerStart += Time.deltaTime;
+        if(2.0f > timerStart) return;
+
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
 
