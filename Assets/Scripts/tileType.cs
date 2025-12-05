@@ -12,8 +12,10 @@ public class TileType : MonoBehaviour
         Rodo,
         Creu,
         Entrada,
-        Dividir
+        Dividir,
+        Pont
     }
 
     public Type tileType;
+    
 }

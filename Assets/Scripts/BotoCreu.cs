@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 
 
-public class BotoRodo : MonoBehaviour
+public class BotoCreu : MonoBehaviour
 {
     public GameObject pont;
     public GameObject pont2;
@@ -13,7 +13,7 @@ public class BotoRodo : MonoBehaviour
 
     public void TogglePont()
     {
-        activat = !activat;
+        activat = !activat;          
 
         if (pont != null && pont2 != null){
             pont.SetActive(activat);

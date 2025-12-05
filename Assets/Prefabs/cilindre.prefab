@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5634296534396559488}
   - component: {fileID: 1727527467284961088}
   - component: {fileID: -5838171683462078348}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cilindre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
