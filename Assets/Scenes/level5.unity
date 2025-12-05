@@ -577,8 +577,6 @@ MonoBehaviour:
     type: 3}
   tileEntrada: {fileID: 5670433352795737811, guid: 2fa02280c420e6c4b89b38734c1dc35e,
     type: 3}
-  tilePont: {fileID: 3692816192109490098, guid: fb5ea3afa21f360469f813f8bfe67d8d,
-    type: 3}
 --- !u!1001 &2672157302546067607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -656,3 +654,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 2672157302546067607}
   - {fileID: 1325002399}
+  - {fileID: 1466964583}
