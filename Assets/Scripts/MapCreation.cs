@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using UnityEngine;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -17,6 +18,7 @@ public class MapCreation : MonoBehaviour
     public GameObject tileCreu;
     public GameObject tileEntrada;
     public GameObject tilePont;
+    public GameObject tileDividir;  
 
     void Start()
     {
@@ -94,6 +96,13 @@ public class MapCreation : MonoBehaviour
                 else if (id == 7) // pont
                 {
                     GameObject obj = Instantiate(tilePont, new Vector3(x, -0.05f, realZ), transform.rotation);
+                    obj.transform.SetParent(transform, false);
+                    obj.SetActive(false);
+                }
+
+                else if (id== 8) //boto dividir
+                {
+                    GameObject obj = Instantiate(tileDividir, new Vector3(x, -0.05f, realZ), transform.rotation);
                     obj.transform.SetParent(transform, false);
                     obj.SetActive(false);
                 }
