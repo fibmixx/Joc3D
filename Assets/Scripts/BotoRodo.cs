@@ -38,6 +38,7 @@ public class BotoRodo : MonoBehaviour
     }
     void Scene4ButtonDeactivate()
     {
+        
         if (pont[0] != null) Destroy(pont[0]);
         if (pont[1] != null) Destroy(pont[1]);
 
@@ -62,5 +63,20 @@ public class BotoRodo : MonoBehaviour
             }
         }
         wasPressed = isPressed;
+    }
+
+    void OnEnable()
+    {
+        moveRectangle.OnRestart += HandleRestart;
+    }
+
+    void OnDisable()
+    {
+        moveRectangle.OnRestart -= HandleRestart;
+    }
+
+    void HandleRestart()
+    {
+        if (scene == 4) Scene4ButtonDeactivate();
     }
 }

@@ -47,4 +47,45 @@ public class LevelIntro : MonoBehaviour
             yield return null;
         }
     }
+
+    IEnumerator FadeEffect()
+    {
+        // FADE OUT a negro
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = t / fadeDuration;
+            fadePanel.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+
+        // Espera opcional
+        yield return new WaitForSeconds(0.4f);
+
+        // FADE IN a transparente
+        t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = 1 - (t / fadeDuration);
+            fadePanel.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+    }
+
+    void OnEnable()
+    {
+        moveRectangle.OnFall += HandleFall;
+    }
+
+    void OnDisable()
+    {
+        moveRectangle.OnFall -= HandleFall;
+    }
+
+    void HandleFall()
+    {
+        StartCoroutine(FadeEffect());
+    }
 }
