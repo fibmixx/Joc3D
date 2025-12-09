@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
 
 // moveRectangle manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
@@ -110,6 +111,8 @@ public class moveRectangle : MonoBehaviour
         state = 0;
         timer = 0.0f;
         timerStart = 0.0f;
+        desactivarPonts();
+
         rotRemainder = 0;
         fallen = false;
         won = false;
@@ -350,12 +353,91 @@ public class moveRectangle : MonoBehaviour
     void typeOfTile()
     {
         tileType = GetGroundType();
+        UnityEngine.Debug.Log("TileType detectat = " + tileType);
+
         if (state == 0)
         {
-            if (tileType == TileType.Type.Orange) bFalling = true;
+               if (tileType == TileType.Type.Orange) bFalling = true;
+                    
+     
+               if (tileType == TileType.Type.Creu)
+               {
+                UnityEngine.Debug.Log("ActivarPontCreu");
+                ActivarPontCreu();
+               }
         }
+        
+        if (tileType == TileType.Type.Rodo)
+        {
+                UnityEngine.Debug.Log("ActivarPontRodo");
+                ActivarPontRodo();
+        }
+        
+    }
+
+    void ActivarPontCreu()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, layerMask))
+        {
+            BotoCreu boto = hit.collider.GetComponent<BotoCreu>();
+            if (boto != null)
+            {
+                boto.TogglePont();
+            }
+        }
+
        
     }
-   
+
+    void ActivarPontRodo()
+    {
+        Vector3 pos = transform.position;
+        float rayDist = 2f;
+
+        Vector3[] offsets =
+        {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        foreach (var o in offsets)
+        {
+            if (Physics.Raycast(pos + o, Vector3.down, out RaycastHit hit, rayDist))
+            {
+                BotoRodo boto = hit.collider.GetComponent<BotoRodo>();
+                if (boto != null)
+                {
+                    boto.TogglePont();
+                    return; // ja hem trobat un botó, sortim
+                }
+            }
+        }
+    }
+
+
+
+    void desactivarPonts()
+    {
+        BotoCreu[] totsCreu = FindObjectsOfType<BotoCreu>();
+        foreach (var b in totsCreu)
+        {
+            if (b.pont != null)
+                b.pont.SetActive(false);
+        }
+
+        BotoRodo[] totsRodo = FindObjectsOfType<BotoRodo>();
+        foreach (var b in totsRodo)
+        {
+            if (b.pont != null)
+                b.pont.SetActive(false);
+
+            if (b.pont2 != null)
+                b.pont2.SetActive(false);
+        }
+    }
+
 
 }
+

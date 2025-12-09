@@ -4,28 +4,20 @@ using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+
 public class BotoRodo : MonoBehaviour
 {
-    float detectDistance = 2.0f;
-    public GameObject tilePont;
-    bool active;
-     bool isPressed = false;  // Si el cub està actualment a sobre del botó
-    bool wasPressed = false; // Si el cub estava a sobre en el frame anterior
-    int scene;
-    GameObject[] pont;
-    // Start is called before the first frame update
+    public GameObject pont;
+    public GameObject pont2;
+    bool activat = false;
 
-    void Start()
+    public void TogglePont()
     {
-        active = false;
-        if (SceneManager.GetActiveScene().name == "level4")
-        {
-            scene = 4;
-            pont = new GameObject[2];
-        }
-            
-    }
+        activat = !activat;
 
+        if (pont != null && pont2 != null){
+            pont.SetActive(activat);
+            pont2.SetActive(activat);
     void Scene4ButtonActivate()
     {
         pont[0] = Instantiate(tilePont, new Vector3(7, -0.05f, 9), transform.rotation);
@@ -62,7 +54,6 @@ public class BotoRodo : MonoBehaviour
                 else Scene4ButtonDeactivate();
             }
         }
-        wasPressed = isPressed;
     }
 
     void OnEnable()
