@@ -317,13 +317,13 @@ public class moveRectangle : MonoBehaviour
                 ActivarPontCreu();
                }
         }
-        else{ 
-            if (tileType == TileType.Type.Rodo)
-            {
+        
+        if (tileType == TileType.Type.Rodo)
+        {
                 UnityEngine.Debug.Log("ActivarPontRodo");
                 ActivarPontRodo();
-            }
         }
+        
     }
 
     void ActivarPontCreu()
@@ -342,17 +342,32 @@ public class moveRectangle : MonoBehaviour
 
     void ActivarPontRodo()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, layerMask))
+        Vector3 pos = transform.position;
+        float rayDist = 2f;
+
+        Vector3[] offsets =
         {
-            BotoRodo boto = hit.collider.GetComponent<BotoRodo>();
-            if (boto != null)
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        foreach (var o in offsets)
+        {
+            if (Physics.Raycast(pos + o, Vector3.down, out RaycastHit hit, rayDist))
             {
-                boto.TogglePont();
+                BotoRodo boto = hit.collider.GetComponent<BotoRodo>();
+                if (boto != null)
+                {
+                    boto.TogglePont();
+                    return; // ja hem trobat un botó, sortim
+                }
             }
         }
-
-
     }
+
+
 
     void desactivarPonts()
     {
