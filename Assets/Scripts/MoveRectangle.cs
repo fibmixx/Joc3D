@@ -5,6 +5,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
+using TMPro;//comptador
+
 
 // moveRectangle manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
@@ -38,7 +40,9 @@ public class moveRectangle : MonoBehaviour
     public bool win = false; //DEJAR EN FALSE
     public string nextSceneName;
     public TileType.Type tileType;
-    
+    public int movesCount = 0;
+    public TMP_Text movesText;
+
     float timerStart = 0.0f;
 
 
@@ -120,6 +124,15 @@ public class moveRectangle : MonoBehaviour
         timerStart = 0.0f;
         startRot = transform.rotation;
         startPos = new Vector3(transform.position.x, 1.1f, transform.position.z);
+
+        //inicialitzar comptador nomes quan estem en el primer nivell
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            movesCount = 0;
+            PlayerPrefs.SetInt("MovesSaved", 0);
+        }
+        else movesCount = PlayerPrefs.GetInt("MovesSaved", 0);
+        movesText.text = "Moves: " + movesCount;
     }
 
 
@@ -189,7 +202,12 @@ public class moveRectangle : MonoBehaviour
             {
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
-                
+
+                movesCount++; //incrementem el comptador de moviments
+                movesText.text = "Moves: " + movesCount;
+
+                PlayerPrefs.SetInt("MovesSaved", movesCount);//guardar pel seguent nivell
+
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);
                 AudioSource.PlayClipAtPoint(sounds[iSound], transform.position, 1.0f);
