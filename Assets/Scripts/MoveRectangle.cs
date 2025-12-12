@@ -55,13 +55,14 @@ public class moveRectangle : MonoBehaviour
     Vector3 pos = transform.position;
     float rayDist = 10f;  // una mica més llarg que 1.0
 
-    Vector3[] offsets = new Vector3[]
-    {
+        Vector3[] offsets = new Vector3[]
+        {
         new Vector3( 0.495f, 0,  0.495f),
         new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(0,0,0),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
-    };
+        };
     
     foreach (var o in offsets)
     {
@@ -82,6 +83,7 @@ public class moveRectangle : MonoBehaviour
         {
         new Vector3( 0.495f, 0,  0.495f),
         new Vector3( 0.495f, 0, -0.495f),
+        new Vector3( 0, 0, 0),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
     };
@@ -135,6 +137,10 @@ public class moveRectangle : MonoBehaviour
         won = false;
     }
 
+    public void selfdestroy()
+    {
+        Destroy(gameObject, 0.1f);
+    }
 
     // Update is called once per frame
     void Update()

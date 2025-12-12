@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2491511569507608783}
   - component: {fileID: 6637045023581901138}
   - component: {fileID: 8356199770798600522}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 7760216535829377518}
   - component: {fileID: 2113962608853491712}
   - component: {fileID: 315762923324569175}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 3045542693676496599}
   - component: {fileID: 2829820344188034768}
   - component: {fileID: 2085702543924630318}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,10 @@ GameObject:
   - component: {fileID: 3518058459607602161}
   - component: {fileID: 9086086385172346003}
   - component: {fileID: 2791895587517306166}
-  m_Layer: 0
+  - component: {fileID: 2236497950125123973}
+  - component: {fileID: 4283326353258079974}
+  - component: {fileID: 1506044711329989602}
+  m_Layer: 3
   m_Name: Tile Separadora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +428,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2791895587517306166
 MonoBehaviour:
@@ -440,6 +443,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 5
+--- !u!114 &2236497950125123973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366357050386992970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6446be20565d31044b8fc6a7af170943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTime: 0.4
+  maxTime: 0.8
+  startOffset: -10
+--- !u!114 &4283326353258079974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366357050386992970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b54e777905e0d41b7572c0ba893fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ubicMeitat1: {x: 0, y: 0, z: 0}
+  ubicMeitat2: {x: 1, y: 1, z: 1}
+  meitat1: {fileID: 5639756454878238042, guid: 320f1c8f4db31884884e8dbeba1fbfc6, type: 3}
+  meitat2: {fileID: 3476344922193987004, guid: f31cb9418a00c5e4a8906124a7d04e69, type: 3}
+--- !u!114 &1506044711329989602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366357050386992970}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 754afeeaff6918746bbe8ab185d69d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cube1: {fileID: 1324009335988373341, guid: 320f1c8f4db31884884e8dbeba1fbfc6, type: 3}
+  cube2: {fileID: 3772787391938679199, guid: f31cb9418a00c5e4a8906124a7d04e69, type: 3}
 --- !u!1 &5682399653816320437
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,7 +500,7 @@ GameObject:
   - component: {fileID: 3352704166108288288}
   - component: {fileID: 8524737919333070913}
   - component: {fileID: 3036322369094425898}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +605,7 @@ GameObject:
   - component: {fileID: 5262998537633136305}
   - component: {fileID: 4984159436791259044}
   - component: {fileID: 4269217777454272339}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +710,7 @@ GameObject:
   - component: {fileID: 8254639536629432664}
   - component: {fileID: 3965082513057030800}
   - component: {fileID: 2817548843939909508}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: s1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

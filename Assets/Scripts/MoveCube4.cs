@@ -10,8 +10,10 @@ using UnityEngine;
 public class MoveCube : MonoBehaviour
 {
     bool bMoving = false; 			// Is the object in the middle of moving?
-	bool bFalling = false; 			// Is the object falling?
-    
+	bool bFalling = false;          // Is the object falling?
+
+    public bool selected;
+
 	public float rotSpeed; 			// Rotation speed in degrees per second
     public float fallSpeed; 		// Fall speed in the Y direction
 
@@ -21,8 +23,8 @@ public class MoveCube : MonoBehaviour
     LayerMask layerMask; 			// LayerMask to detect raycast hits with ground tiles only
 
     public AudioClip[] sounds; 		// Sounds to play when the cube rotates
-    public AudioClip fallSound; 	// Sound to play when the cube starts falling
-	
+    public AudioClip fallSound;     // Sound to play when the cube starts falling
+
 	
 	// Determine if the cube is grounded by shooting a ray down from the cube location and 
 	// looking for hits with ground tiles
@@ -39,14 +41,15 @@ public class MoveCube : MonoBehaviour
     // Start is called once after the MonoBehaviour is created
     void Start()
     {
-		// Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
+        // Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
         layerMask = LayerMask.GetMask("Ground");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(bFalling)
+        if (Input.GetKeyDown(KeyCode.Space)) selected = !selected;
+        if (bFalling)
         {
 			// If we have fallen, we just move down
             transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
@@ -67,9 +70,9 @@ public class MoveCube : MonoBehaviour
                 rotRemainder -= amount;
             }
         }
-        else
+        else if (selected)
         {
-			// If we are not falling, nor moving, we check first if we should fall, then if we have to move
+            // If we are not falling, nor moving, we check first if we should fall, then if we have to move
             if (!isGrounded())
             {
                 bFalling = true;
