@@ -45,6 +45,7 @@ public class BotoDividir : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= 1)
             {
+                timer = 0;
                 summoned = false;
             }
         }

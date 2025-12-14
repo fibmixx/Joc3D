@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-
-
+using System.Collections;
+using UnityEngine.SceneManagement;
 // MoveCube manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
 // Some events trigger corresponding sounds.
@@ -24,10 +24,14 @@ public class MoveCube : MonoBehaviour
 
     public AudioClip[] sounds; 		// Sounds to play when the cube rotates
     public AudioClip fallSound;     // Sound to play when the cube starts falling
-
+    public GameObject rectangle;
+    bool hasmerged = false;
+    bool fallen = false;
+    int d = 0; // 0 = forward, 1 = back, 2 = left, 3 = right
 	
 	// Determine if the cube is grounded by shooting a ray down from the cube location and 
 	// looking for hits with ground tiles
+    public static event Action OnFall;
 
     bool isGrounded()
     {
@@ -38,6 +42,39 @@ public class MoveCube : MonoBehaviour
         return false;
     }
 
+        void Restart()
+    {
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    MoveCube GetNextToCube()
+    {
+        Vector3[] dirs =
+        {
+            Vector3.forward, // 0
+            Vector3.back,    // 1
+            Vector3.left,    // 2
+            Vector3.right    // 3
+        };
+
+        for (int i = 0; i < dirs.Length; i++)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dirs[i], out hit, 1f))
+            {
+                MoveCube cube = hit.collider.GetComponent<MoveCube>();
+                if (cube != null && cube != this)
+                {
+                    d = i;
+                    return cube;
+                }
+            }
+        }
+
+        return null;
+    }
+
     // Start is called once after the MonoBehaviour is created
     void Start()
     {
@@ -45,14 +82,30 @@ public class MoveCube : MonoBehaviour
         layerMask = LayerMask.GetMask("Ground");
     }
 
+    IEnumerator Esperar()
+    {
+        yield return new WaitForSeconds(0.3f);
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) selected = !selected;
+        if (Input.GetKeyDown(KeyCode.R))
+            Restart();
+        MoveCube otherCube = GetNextToCube();
         if (bFalling)
         {
 			// If we have fallen, we just move down
             transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+            if (transform.position.y < -10f)
+                if (!fallen)
+                {
+                    OnFall.Invoke();
+                    fallen = true;
+                }
+            if (transform.position.y < -20f)
+                Restart();
         }
         else if (bMoving)
         {
@@ -69,6 +122,26 @@ public class MoveCube : MonoBehaviour
                 transform.RotateAround(rotPoint, rotAxis, amount * rotDir);
                 rotRemainder -= amount;
             }
+        }
+        else if (otherCube!=null && !hasmerged)
+        {
+            hasmerged = true;
+            StartCoroutine(Esperar());
+            if (selected)
+            {
+                Vector3 midPos = new Vector3((transform.position.x + otherCube.transform.position.x)/2, 0.6f, (transform.position.z + otherCube.transform.position.z)/2);
+                Quaternion rot;
+                if (d == 0 || d == 1) rot = Quaternion.Euler(-90f, 0f, 0f);
+                else rot = Quaternion.Euler(0f, 0f, 90f);
+                GameObject r = Instantiate(rectangle, midPos, rot);
+                moveRectangle mr = r.GetComponent<moveRectangle>();
+                if (mr!=null)
+                {
+                    if (d == 0 || d == 1) mr.state = 2;
+                    else mr.state = 1;
+                }
+            }
+            Destroy(gameObject, 0.2f);
         }
         else if (selected)
         {

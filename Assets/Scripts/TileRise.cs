@@ -97,6 +97,7 @@ public class TileRise : MonoBehaviour
         moveRectangle.OnRestart += HandleRestart;
         moveRectangle.OnFall += HandleFall;
         moveRectangle.OnWin += HandleWin;
+        MoveCube.OnFall += HandleFall;
     }
 
     void OnDisable()
@@ -104,6 +105,7 @@ public class TileRise : MonoBehaviour
         moveRectangle.OnRestart -= HandleRestart;
         moveRectangle.OnFall -= HandleFall;
         moveRectangle.OnWin -= HandleWin;
+        MoveCube.OnFall -= HandleFall;
     }
 
     void HandleRestart()

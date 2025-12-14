@@ -38,7 +38,6 @@ public class moveRectangle : MonoBehaviour
 
     float timer;
     public bool win = false; //DEJAR EN FALSE
-    public string nextSceneName;
     public TileType.Type tileType;
     Vector3 eix;    
     float timerStart = 0.0f;
@@ -104,22 +103,8 @@ public class moveRectangle : MonoBehaviour
     public static event Action OnRestart;
     void Restart()
     {
-        transform.position = startPos;
-        transform.rotation = startRot;
-        bMoving = false;
-        bFalling = false;
-        rotRemainder = 0;
-        win = false;
-        state = 0;
-        timer = 0.0f;
-        timerStart = 0.0f;
-        desactivarPonts();
-
-        rotRemainder = 0;
-        fallen = false;
-        won = false;
-
         OnRestart.Invoke();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Start is called once after the MonoBehaviour is created
@@ -127,7 +112,6 @@ public class moveRectangle : MonoBehaviour
     {
         // Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
         layerMask = LayerMask.GetMask("Ground");
-        state = 0;
         win = false;
         timer = 0.0f;
         timerStart = 0.0f;
@@ -189,7 +173,7 @@ public class moveRectangle : MonoBehaviour
             if (timer >= 3.0f)
             {
                 timer = 0f; 
-                SceneManager.LoadScene(nextSceneName);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
         else if (bMoving)
@@ -302,6 +286,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, 0.5f);
                         lastMove = 2;
+                        nextstate = 1;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -310,6 +295,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
                         lastMove = 3;
+                        nextstate = 1;
                     }
                 }
                 else // eix Z
@@ -322,6 +308,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(0.5f, -0.5f, 0.0f);
                         lastMove = 1;
+                        nextstate = 2;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -330,6 +317,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-0.5f, -0.5f, 0.0f);
                         lastMove = 0;
+                        nextstate = 2;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -349,9 +337,8 @@ public class moveRectangle : MonoBehaviour
                         nextstate = 0;
                         lastMove = 3;
                     }
-
-                    
                 }
+                UnityEngine.Debug.Log(nextstate);
                 //Debug.Log(lastMove);
             }
         }
@@ -359,7 +346,7 @@ public class moveRectangle : MonoBehaviour
     void typeOfTile()
     {
         tileType = GetGroundType();
-        UnityEngine.Debug.Log("TileType detectat = " + tileType);
+        //UnityEngine.Debug.Log("TileType detectat = " + tileType);
 
         if (state == 0)
         {
@@ -368,14 +355,14 @@ public class moveRectangle : MonoBehaviour
      
                if (tileType == TileType.Type.Creu)
                {
-                UnityEngine.Debug.Log("ActivarPontCreu");
+                //UnityEngine.Debug.Log("ActivarPontCreu");
                 ActivarPontCreu();
                }
         }
         
         if (tileType == TileType.Type.Rodo)
         {
-                UnityEngine.Debug.Log("ActivarPontRodo");
+                //UnityEngine.Debug.Log("ActivarPontRodo");
                 ActivarPontRodo();
         }
         
@@ -444,6 +431,10 @@ public class moveRectangle : MonoBehaviour
         }
     }
 
+    IEnumerator Esperar()
+    {
+        yield return new WaitForSeconds(0.3f);
+    }
 
 }
 

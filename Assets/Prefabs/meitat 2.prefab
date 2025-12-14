@@ -127,3 +127,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4777373ff62c7a941b137ea300501eeb, type: 3}
   - {fileID: 8300000, guid: 10b7f35470b5aa44d9e37642cd1fa8a7, type: 3}
   fallSound: {fileID: 8300000, guid: 2b4430ab3b1fe604180fb7133f9b3634, type: 3}
+  rectangle: {fileID: 2463159668637317035, guid: 9a02f0f62bedf1b4abb702198194bfe6,
+    type: 3}
