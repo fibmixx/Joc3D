@@ -76,19 +76,42 @@ public class TileRise : MonoBehaviour
         Vector3 startPos = transform.position;
         float timer = 0f;
 
+        Vector3 sceneCenter = new Vector3(10f, 0f, 10f);
+        Vector3 dirFromCenter = (startPos - sceneCenter).normalized;
+        float startRadius = Vector3.Distance(startPos, sceneCenter);
+        float endRadius = startRadius + Random.Range(10f, 40f);
+        float spinSpeed = Random.Range(180f, 360f);
+        Vector3 offset = startPos - sceneCenter;
+        float angleAcc = 0f;
+
         while (timer < t)
         {
             timer += Time.deltaTime;
             float k = timer / t;
 
-            // suavitzar el moviment (ease-out)
+            // Ease-out
             k = Mathf.Sin(k * Mathf.PI * 0.5f);
+            // Altura
+            float y = Mathf.Lerp(startPos.y, posWin.y, k);
+            // Radio
+            float radius = Mathf.Lerp(startRadius, endRadius, k);
+            // Ángulo acumulado
+            angleAcc += spinSpeed * Time.deltaTime;
+            // Rotar respecto centro
+            Vector3 rotatedOffset = Quaternion.Euler(0f, angleAcc, 0f) * offset.normalized * radius;
 
-            transform.position = Vector3.Lerp(startPos, posWin, k);
+            Vector3 finalPos = sceneCenter + rotatedOffset;
+            finalPos.y = y;
+
+            transform.position = finalPos;
+
+            // Rotar
+            //transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime, Space.World);
+
             yield return null;
         }
 
-        // Ens assegurem que arriba exactament a la posició final
+
         transform.position = posWin;
     }
 
