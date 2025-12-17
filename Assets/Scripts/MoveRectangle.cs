@@ -5,6 +5,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
+using TMPro;//comptador
+
 
 // moveRectangle manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
@@ -39,6 +41,9 @@ public class moveRectangle : MonoBehaviour
     float timer;
     public bool win = false; //DEJAR EN FALSE
     public TileType.Type tileType;
+    public int movesCount = 0;
+    public TMP_Text movesText;
+
     Vector3 eix;    
     float timerStart = 0.0f;
     bool fallen = false;
@@ -117,6 +122,15 @@ public class moveRectangle : MonoBehaviour
         timerStart = 0.0f;
         startRot = transform.rotation;
         startPos = new Vector3(transform.position.x, 1.1f, transform.position.z);
+
+        //inicialitzar comptador nomes quan estem en el primer nivell
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            movesCount = 0;
+            PlayerPrefs.SetInt("MovesSaved", 0);
+        }
+        else movesCount = PlayerPrefs.GetInt("MovesSaved", 0);
+        movesText.text = "Moves: " + movesCount;
         fallen = false;
         won = false;
     }
@@ -129,6 +143,12 @@ public class moveRectangle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        saltarLevel();
+
+        timerStart += Time.deltaTime;
+        if(2.0f > timerStart) return;
+
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
 
@@ -213,7 +233,12 @@ public class moveRectangle : MonoBehaviour
             {
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
-                
+
+                movesCount++; //incrementem el comptador de moviments
+                movesText.text = "Moves: " + movesCount;
+
+                PlayerPrefs.SetInt("MovesSaved", movesCount);//guardar pel seguent nivell
+
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);
                 AudioSource.PlayClipAtPoint(sounds[iSound], transform.position, 1.0f);
@@ -431,10 +456,41 @@ public class moveRectangle : MonoBehaviour
         }
     }
 
+    void saltarLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SceneManager.LoadScene(1);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SceneManager.LoadScene(2);
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SceneManager.LoadScene(3);
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            SceneManager.LoadScene(4);
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            SceneManager.LoadScene(5);
     IEnumerator Esperar()
     {
         yield return new WaitForSeconds(0.3f);
     }
 
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            SceneManager.LoadScene(6);
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            SceneManager.LoadScene(7);
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            SceneManager.LoadScene(8);
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            SceneManager.LoadScene(9);
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SceneManager.LoadScene(10);
+    }
 }
 

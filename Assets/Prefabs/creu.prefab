@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8004443137820873545}
   - component: {fileID: 952618911499355553}
   - component: {fileID: -1118762588332658047}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: creu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pont: {fileID: 0}
+  pont2: {fileID: 0}
 --- !u!1001 &3348226619549390438
 PrefabInstance:
   m_ObjectHideFlags: 0
