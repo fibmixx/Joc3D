@@ -47,4 +47,36 @@ public class LevelIntro : MonoBehaviour
             yield return null;
         }
     }
+
+    IEnumerator FadeEffect()
+    {
+        // FADE OUT a negro
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = t / fadeDuration;
+            fadePanel.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+    }
+
+    void OnEnable()
+    {
+        moveRectangle.OnFall += HandleFall;
+        MoveCube.OnFall += HandleFall;
+    }
+
+    void OnDisable()
+    {
+        moveRectangle.OnFall -= HandleFall;
+        MoveCube.OnFall += HandleFall;
+    }
+
+    void HandleFall()
+    {
+        if (this == null || !gameObject.activeInHierarchy) //arelga un error que pasa con el cubo por algun motivo
+            return;
+        StartCoroutine(FadeEffect());
+    }
 }

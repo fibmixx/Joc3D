@@ -15,9 +15,28 @@ public class BotoRodo : MonoBehaviour
     {
         activat = !activat;
 
-        if (pont != null && pont2 != null){
+        if (pont != null && pont2 != null)
+        {
             pont.SetActive(activat);
             pont2.SetActive(activat);
         }
+    }
+
+
+
+    void OnEnable()
+    {
+        moveRectangle.OnRestart += HandleRestart;
+    }
+
+    void OnDisable()
+    {
+        moveRectangle.OnRestart -= HandleRestart;
+    }
+
+    void HandleRestart()
+    {
+        activat = true;
+        TogglePont();
     }
 }

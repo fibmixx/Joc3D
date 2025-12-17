@@ -20,6 +20,11 @@ public class MenuSystem : MonoBehaviour
 
     public void Credits()
     {
+        SceneManager.LoadScene("credits");
+    }
+
+    public void Return()
+    {
         SceneManager.LoadScene("menu");
     }
 }
