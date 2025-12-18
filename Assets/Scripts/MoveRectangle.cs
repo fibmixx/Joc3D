@@ -41,8 +41,6 @@ public class moveRectangle : MonoBehaviour
     float timer;
     public bool win = false; //DEJAR EN FALSE
     public TileType.Type tileType;
-    public int movesCount = 0;
-    public TMP_Text movesText;
 
     Vector3 eix;    
     float timerStart = 0.0f;
@@ -124,13 +122,6 @@ public class moveRectangle : MonoBehaviour
         startPos = new Vector3(transform.position.x, 1.1f, transform.position.z);
 
         //inicialitzar comptador nomes quan estem en el primer nivell
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            movesCount = 0;
-            PlayerPrefs.SetInt("MovesSaved", 0);
-        }
-        else movesCount = PlayerPrefs.GetInt("MovesSaved", 0);
-        movesText.text = "Moves: " + movesCount;
         fallen = false;
         won = false;
     }
@@ -234,10 +225,7 @@ public class moveRectangle : MonoBehaviour
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
 
-                movesCount++; //incrementem el comptador de moviments
-                movesText.text = "Moves: " + movesCount;
-
-                PlayerPrefs.SetInt("MovesSaved", movesCount);//guardar pel seguent nivell
+                GameManager.Instance.AddMove();
 
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);

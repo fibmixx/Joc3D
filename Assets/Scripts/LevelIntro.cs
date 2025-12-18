@@ -57,6 +57,7 @@ public class LevelIntro : MonoBehaviour
             t += Time.deltaTime;
             float a = t / fadeDuration;
             fadePanel.color = new Color(0, 0, 0, a);
+            yield return new WaitForSeconds(15);
             yield return null;
         }
     }
@@ -64,19 +65,27 @@ public class LevelIntro : MonoBehaviour
     void OnEnable()
     {
         moveRectangle.OnFall += HandleFall;
+        moveRectangle.OnRestart += HandleFall;
         MoveCube.OnFall += HandleFall;
     }
 
     void OnDisable()
     {
         moveRectangle.OnFall -= HandleFall;
+        moveRectangle.OnRestart -= HandleFall;
         MoveCube.OnFall += HandleFall;
     }
+
 
     void HandleFall()
     {
         if (this == null || !gameObject.activeInHierarchy) //arelga un error que pasa con el cubo por algun motivo
             return;
         StartCoroutine(FadeEffect());
+    }
+
+    void HandleRestart()
+    {
+        FadeEffect();
     }
 }
