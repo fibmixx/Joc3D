@@ -8,6 +8,7 @@ using System.Diagnostics;
 public class ExitMenu : MonoBehaviour
 {
     public GameObject exitPopup;
+    [SerializeField] private GameManager gameManager;
 
     public void OpenPopup()
     {
@@ -24,7 +25,10 @@ public class ExitMenu : MonoBehaviour
 
         
         PlayerPrefs.SetInt("MovesSaved", 0); // reiniciar comptador
-        SceneManager.LoadScene(0);
 
+        UnityEngine.Debug.Log("boto!");
+        exitPopup.SetActive(false);
+        gameManager.ExitToMainMenu();
+        UnityEngine.Debug.Log("tornant");
     }
 }
