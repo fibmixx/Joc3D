@@ -376,7 +376,7 @@ public class moveRectangle : MonoBehaviour
         if (tileType == TileType.Type.Rodo)
         {
                 //UnityEngine.Debug.Log("ActivarPontRodo");
-                ActivarPontRodo();
+                //ActivarPontRodo();
         }
         
     }
@@ -406,7 +406,7 @@ public class moveRectangle : MonoBehaviour
         new Vector3( 0.495f, 0, -0.495f),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
-    };
+        };
 
         foreach (var o in offsets)
         {
