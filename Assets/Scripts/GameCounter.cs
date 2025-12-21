@@ -2,9 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameCounter : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameCounter Instance;
 
     public int movesCount;
     public TextMeshProUGUI movesText;

@@ -225,7 +225,7 @@ public class moveRectangle : MonoBehaviour
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
 
-                GameManager.Instance.AddMove();
+                GameCounter.Instance.AddMove();
 
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);
@@ -460,10 +460,6 @@ public class moveRectangle : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
             SceneManager.LoadScene(5);
-    IEnumerator Esperar()
-    {
-        yield return new WaitForSeconds(0.3f);
-    }
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
             SceneManager.LoadScene(6);

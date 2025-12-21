@@ -159,7 +159,7 @@ public class MoveCube : MonoBehaviour
             dir.Normalize();
             if(Math.Abs(dir.x) > 0.99 || Math.Abs(dir.y) > 0.99)
             {
-                GameManager.Instance.AddMove();
+                GameCounter.Instance.AddMove();
 				// If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
 				
