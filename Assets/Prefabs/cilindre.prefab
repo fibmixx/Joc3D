@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5634296534396559488}
   - component: {fileID: 1727527467284961088}
   - component: {fileID: -5838171683462078348}
+  - component: {fileID: -3142046796212887285}
   m_Layer: 3
   m_Name: cilindre
   m_TagString: Untagged
@@ -134,5 +135,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d369cfbca512c564287bc97bf602c4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePont: {fileID: 3692816192109490098, guid: fb5ea3afa21f360469f813f8bfe67d8d,
-    type: 3}
+  pont: {fileID: 0}
+  pont2: {fileID: 0}
+--- !u!114 &-3142046796212887285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236914470773519723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6446be20565d31044b8fc6a7af170943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTime: 0.4
+  maxTime: 0.8
+  startOffset: -10

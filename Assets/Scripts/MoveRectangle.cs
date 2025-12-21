@@ -36,15 +36,19 @@ public class moveRectangle : MonoBehaviour
     // 0 = Vertical, 1 = X axis, 2 = Z Axis
 
     int nextstate = 0;
+    int lastMove = 0; //0 = left, 1 = right, 2 = up, 3 = down
+
     float timer;
     public bool win = false; //DEJAR EN FALSE
-    public string nextSceneName;
     public TileType.Type tileType;
-    public int movesCount = 0;
-    public TMP_Text movesText;
 
+    Vector3 eix;    
     float timerStart = 0.0f;
+    bool fallen = false;
+    bool won = false;
 
+    public static event Action OnFall;
+    public static event Action OnWin;
 
     // Determine if the cube is grounded by shooting a ray down from the cube location and 
     // looking for hits with ground tiles
@@ -53,13 +57,14 @@ public class moveRectangle : MonoBehaviour
     Vector3 pos = transform.position;
     float rayDist = 10f;  // una mica més llarg que 1.0
 
-    Vector3[] offsets = new Vector3[]
-    {
+        Vector3[] offsets = new Vector3[]
+        {
         new Vector3( 0.495f, 0,  0.495f),
         new Vector3( 0.495f, 0, -0.495f),
+        new Vector3(0,0,0),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
-    };
+        };
     
     foreach (var o in offsets)
     {
@@ -80,6 +85,7 @@ public class moveRectangle : MonoBehaviour
         {
         new Vector3( 0.495f, 0,  0.495f),
         new Vector3( 0.495f, 0, -0.495f),
+        new Vector3( 0, 0, 0),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
     };
@@ -97,20 +103,11 @@ public class moveRectangle : MonoBehaviour
         return TileType.Type.Normal;
     }
 
-
+    public static event Action OnRestart;
     void Restart()
     {
-        transform.position = startPos;
-        transform.rotation = startRot;
-        bMoving = false;
-        bFalling = false;
-        rotRemainder = 0;
-        win = false;
-        state = 0;
-        timer = 0.0f;
-        timerStart = 0.0f;
-        desactivarPonts();
-
+        OnRestart.Invoke();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Start is called once after the MonoBehaviour is created
@@ -118,7 +115,6 @@ public class moveRectangle : MonoBehaviour
     {
         // Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
         layerMask = LayerMask.GetMask("Ground");
-        state = 0;
         win = false;
         timer = 0.0f;
         timerStart = 0.0f;
@@ -126,15 +122,14 @@ public class moveRectangle : MonoBehaviour
         startPos = new Vector3(transform.position.x, 1.1f, transform.position.z);
 
         //inicialitzar comptador nomes quan estem en el primer nivell
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            movesCount = 0;
-            PlayerPrefs.SetInt("MovesSaved", 0);
-        }
-        else movesCount = PlayerPrefs.GetInt("MovesSaved", 0);
-        movesText.text = "Moves: " + movesCount;
+        fallen = false;
+        won = false;
     }
 
+    public void selfdestroy()
+    {
+        Destroy(gameObject, 0.1f);
+    }
 
     // Update is called once per frame
     void Update()
@@ -148,22 +143,48 @@ public class moveRectangle : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
 
+        timerStart += Time.deltaTime;
+        if(2.0f > timerStart) return;
+
 
         if (bFalling)
         {
             // If we have fallen, we just move down
+            if (lastMove == 0)
+                eix = Vector3.forward;
+            else if (lastMove == 1)
+                eix = Vector3.back;           
+            else if (lastMove == 2)
+                eix = Vector3.right;           
+            else
+                eix = Vector3.left;
+
             transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+            transform.Rotate(2 * eix * rotSpeed * Time.deltaTime, Space.World);
+
             if (transform.position.y < -10f)
+                if (!fallen)
+                {
+                    OnFall.Invoke();
+                    fallen = true;
+                }
+            if (transform.position.y < -20f)
                 Restart();
+
         }
         else if (win)
         {
             timer += Time.deltaTime;
             transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
-            if (timer >= 2.0f)
+            if (timer >= 1.0f && !won)
+            {
+                OnWin.Invoke();
+                won = true;
+            } 
+            if (timer >= 3.0f)
             {
                 timer = 0f; 
-                SceneManager.LoadScene(nextSceneName);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
         else if (bMoving)
@@ -190,6 +211,7 @@ public class moveRectangle : MonoBehaviour
             if (!isGrounded())
             {
                 bFalling = true;
+                rotRemainder = 360; 
 
                 // Play sound associated to falling
                 AudioSource.PlayClipAtPoint(fallSound, transform.position, 1.5f);
@@ -203,10 +225,7 @@ public class moveRectangle : MonoBehaviour
                 // If the absolute value of one of the axis is larger than 0.99, the player wants to move in a non diagonal direction
                 bMoving = true;
 
-                movesCount++; //incrementem el comptador de moviments
-                movesText.text = "Moves: " + movesCount;
-
-                PlayerPrefs.SetInt("MovesSaved", movesCount);//guardar pel seguent nivell
+                GameCounter.Instance.AddMove();
 
                 // We play a random movemnt sound
                 int iSound = UnityEngine.Random.Range(0, sounds.Length);
@@ -221,6 +240,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(0.5f, -1.0f, 0.0f);
                         nextstate = 1;
+                        lastMove = 1;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -229,6 +249,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-0.5f, -1.0f, 0.0f);
                         nextstate = 1;
+                        lastMove = 0;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -237,6 +258,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, 0.5f);
                         nextstate = 2;
+                        lastMove = 2;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -245,6 +267,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -1.0f, -0.5f);
                         nextstate = 2;
+                        lastMove = 3;
                     }
 
                 }
@@ -258,6 +281,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(1.0f, -0.5f, 0.0f);
                         nextstate = 0;
+                        lastMove = 1;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -266,6 +290,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-1.0f, -0.5f, 0.0f);
                         nextstate = 0;
+                        lastMove = 0;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -273,6 +298,8 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, 0.5f);
+                        lastMove = 2;
+                        nextstate = 1;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -280,6 +307,8 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
+                        lastMove = 3;
+                        nextstate = 1;
                     }
                 }
                 else // eix Z
@@ -291,6 +320,8 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(0.5f, -0.5f, 0.0f);
+                        lastMove = 1;
+                        nextstate = 2;
                     }
                     else if (dir.x < -0.99)
                     {
@@ -298,6 +329,8 @@ public class moveRectangle : MonoBehaviour
                         rotRemainder = 90.0f;
                         rotAxis = new Vector3(0.0f, 0.0f, 1.0f);
                         rotPoint = transform.position + new Vector3(-0.5f, -0.5f, 0.0f);
+                        lastMove = 0;
+                        nextstate = 2;
                     }
                     else if (dir.y > 0.99)
                     {
@@ -306,6 +339,7 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, 1.0f);
                         nextstate = 0;
+                        lastMove = 2;
                     }
                     else if (dir.y < -0.99)
                     {
@@ -314,17 +348,18 @@ public class moveRectangle : MonoBehaviour
                         rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                         rotPoint = transform.position + new Vector3(0.0f, -0.5f, -1.0f);
                         nextstate = 0;
+                        lastMove = 3;
                     }
-
-                    
                 }
+                UnityEngine.Debug.Log(nextstate);
+                //Debug.Log(lastMove);
             }
         }
     }
     void typeOfTile()
     {
         tileType = GetGroundType();
-        UnityEngine.Debug.Log("TileType detectat = " + tileType);
+        //UnityEngine.Debug.Log("TileType detectat = " + tileType);
 
         if (state == 0)
         {
@@ -333,15 +368,15 @@ public class moveRectangle : MonoBehaviour
      
                if (tileType == TileType.Type.Creu)
                {
-                UnityEngine.Debug.Log("ActivarPontCreu");
+                //UnityEngine.Debug.Log("ActivarPontCreu");
                 ActivarPontCreu();
                }
         }
         
         if (tileType == TileType.Type.Rodo)
         {
-                UnityEngine.Debug.Log("ActivarPontRodo");
-                ActivarPontRodo();
+                //UnityEngine.Debug.Log("ActivarPontRodo");
+                //ActivarPontRodo();
         }
         
     }
@@ -371,7 +406,7 @@ public class moveRectangle : MonoBehaviour
         new Vector3( 0.495f, 0, -0.495f),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
-    };
+        };
 
         foreach (var o in offsets)
         {

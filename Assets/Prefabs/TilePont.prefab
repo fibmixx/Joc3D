@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5819609989474162948}
   - component: {fileID: 3114368357802978701}
   - component: {fileID: 868470312619457707}
+  - component: {fileID: 122884935457697186}
   m_Layer: 3
   m_Name: TilePont
   m_TagString: Untagged
@@ -119,3 +120,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 6
+--- !u!114 &122884935457697186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692816192109490098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6446be20565d31044b8fc6a7af170943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTime: 0.4
+  maxTime: 0.8
+  startOffset: -10

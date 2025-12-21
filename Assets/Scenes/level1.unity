@@ -1252,6 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6831bfb1b9e82da4696ec90aad0239da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   rotSpeed: 240
   fallSpeed: 10
   sounds:
@@ -1260,6 +1261,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10b7f35470b5aa44d9e37642cd1fa8a7, type: 3}
   - {fileID: 8300000, guid: 4777373ff62c7a941b137ea300501eeb, type: 3}
   fallSound: {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
+  rectangle: {fileID: 0}
 --- !u!114 &283824554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,7 +1283,6 @@ MonoBehaviour:
   fallSound: {fileID: 8300000, guid: 2b4430ab3b1fe604180fb7133f9b3634, type: 3}
   state: 0
   win: 0
-  nextSceneName: level2
   tileType: 0
   movesCount: 0
   movesText: {fileID: 6978946052607093955}

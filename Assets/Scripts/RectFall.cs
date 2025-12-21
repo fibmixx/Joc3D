@@ -44,12 +44,19 @@ public class RectFall : MonoBehaviour
         transform.position = finalPos;
     }
 
-     void Update()
+    void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            StartCoroutine(RiseCoroutine(duration));
+        moveRectangle.OnRestart += HandleRestart;
     }
 
+    void OnDisable()
+    {
+        moveRectangle.OnRestart -= HandleRestart;
+    }
 
+    void HandleRestart()
+    {
+        StartCoroutine(RiseCoroutine(duration));
+    }
 
 }
