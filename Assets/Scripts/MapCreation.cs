@@ -104,7 +104,7 @@ public class MapCreation : MonoBehaviour
                 {
                     GameObject obj = Instantiate(tileDividir, new Vector3(x, -0.05f, realZ), transform.rotation);
                     obj.transform.SetParent(transform, false);
-                    obj.SetActive(false);
+                    
                 }
             }
         }
