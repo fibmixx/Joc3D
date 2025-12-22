@@ -28,6 +28,10 @@ public class MoveCube : MonoBehaviour
     bool hasmerged = false;
     bool fallen = false;
     int d = 0; // 0 = forward, 1 = back, 2 = left, 3 = right
+
+    float timerStart = 0f;
+
+    public Material myMaterial;
 	
 	// Determine if the cube is grounded by shooting a ray down from the cube location and 
 	// looking for hits with ground tiles
@@ -80,6 +84,9 @@ public class MoveCube : MonoBehaviour
     {
         // Create the layer mask for ground tiles. Done once in the Start method to avoid doing it every Update call.
         layerMask = LayerMask.GetMask("Ground");
+        timerStart = 0f;
+        if (selected) myMaterial.SetFloat("_Scale", 1.08f);
+        else myMaterial.SetFloat("_Scale", 1f);
     }
 
     IEnumerator Esperar()
@@ -90,9 +97,17 @@ public class MoveCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) selected = !selected;
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            selected = !selected;
+             if (myMaterial.GetFloat("_Scale") == 1)   myMaterial.SetFloat("_Scale", 1.08f);
+             else myMaterial.SetFloat("_Scale", 1f);
+        }
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
+        
+        timerStart += Time.deltaTime;
+        if(2.0f > timerStart) return;
+        
         MoveCube otherCube = GetNextToCube();
         if (bFalling)
         {
@@ -196,6 +211,16 @@ public class MoveCube : MonoBehaviour
                     rotAxis = new Vector3(1.0f, 0.0f, 0.0f);
                     rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
                 }
+            }
+        }
+        else // un cubo n oseleccionado pueda caer
+        {
+            if (!isGrounded())
+            {
+                bFalling = true;
+				
+				// Play sound associated to falling
+                AudioSource.PlayClipAtPoint(fallSound, transform.position, 1.5f);
             }
         }
     }

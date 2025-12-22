@@ -137,9 +137,6 @@ public class moveRectangle : MonoBehaviour
 
         saltarLevel();
 
-        timerStart += Time.deltaTime;
-        if(2.0f > timerStart) return;
-
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
 
