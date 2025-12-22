@@ -56,3 +56,5 @@ MonoBehaviour:
     type: 3}
   tilePont: {fileID: 3692816192109490098, guid: fb5ea3afa21f360469f813f8bfe67d8d,
     type: 3}
+  tileDividir: {fileID: 3366357050386992970, guid: 17d1b24cfbd00154e80278f66f373f34,
+    type: 3}

@@ -44,7 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5379bcd223b030c4fa6dd69dddc4c39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingSceneTransition: {fileID: 1501964989185580029, guid: 58b9af9425ed2d94382a6d9f423cf4ea,
-    type: 3}
-  _endingSceneTransition: {fileID: 8230341737793158372, guid: 7e4277ba8e0c59e4d8ff3b4b534a7ae1,
-    type: 3}
+  _startingSceneTransition: {fileID: 0}
+  startDuration: 0.8
