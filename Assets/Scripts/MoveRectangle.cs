@@ -360,10 +360,14 @@ public class moveRectangle : MonoBehaviour
 
         if (state == 0)
         {
-               if (tileType == TileType.Type.Orange) bFalling = true;
-                    
-     
-               if (tileType == TileType.Type.Creu)
+            if (tileType == TileType.Type.Orange)
+            {
+                bFalling = true;
+                AudioSource.PlayClipAtPoint(fallSound, transform.position, 1.5f);
+            }
+
+
+                if (tileType == TileType.Type.Creu)
                {
                 //UnityEngine.Debug.Log("ActivarPontCreu");
                 ActivarPontCreu();
