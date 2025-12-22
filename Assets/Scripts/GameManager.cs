@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _startingSceneTransition;
     [SerializeField] private float startDuration = 1.0f;
 
+    
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip meowClip;
+
     public void ExitToMainMenu()
     {
         StartCoroutine(ExitCoroutine());
@@ -14,11 +18,16 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ExitCoroutine()
     {
-        // 1️⃣ 放大（当前关卡）
+        if (sfxSource != null && meowClip != null)
+        {
+            sfxSource.PlayOneShot(meowClip);
+        }
+
         _startingSceneTransition.SetActive(true);
         yield return new WaitForSeconds(startDuration);
 
-        // 2️⃣ 切换场景
+
         SceneManager.LoadScene(0);
+        
     }
 }
