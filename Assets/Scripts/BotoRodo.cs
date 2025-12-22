@@ -10,8 +10,8 @@ public class BotoRodo : MonoBehaviour
     public GameObject pont;
     public GameObject pont2;
     bool activat = false;
-    bool isPressed = false;
-    bool wasPressed = false;
+    
+   
 
     public void TogglePont()
     {
@@ -26,13 +26,7 @@ public class BotoRodo : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
-        isPressed = Physics.Raycast(transform.position, Vector3.up, out hit, 2f);
-        if (isPressed && !wasPressed)
-        {   
-            TogglePont();
-        }
-        wasPressed = isPressed;
+        
     }
 
     void OnEnable()

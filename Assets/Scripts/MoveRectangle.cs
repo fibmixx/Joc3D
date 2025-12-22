@@ -373,7 +373,7 @@ public class moveRectangle : MonoBehaviour
         if (tileType == TileType.Type.Rodo)
         {
                 //UnityEngine.Debug.Log("ActivarPontRodo");
-                //ActivarPontRodo();
+                ActivarPontRodo();
         }
         
     }
