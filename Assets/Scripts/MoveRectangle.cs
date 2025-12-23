@@ -17,6 +17,8 @@ public class moveRectangle : MonoBehaviour
 {
     public bool bMoving = false;    // Is the object in the middle of moving? DEJAR EN FALSE
     public bool bFalling = false;          // Is the object falling?
+    public bool isRectangle = true; // rectangle = true, al del cub = false
+
 
     Vector3 startPos;
     Quaternion startRot;
@@ -90,7 +92,7 @@ public class moveRectangle : MonoBehaviour
         new Vector3(-0.495f, 0, -0.495f),
     };
 
-        bool hasOrange = false, hasCreu = false, hasRodo = false;
+        bool hasOrange = false, hasCreu = false, hasRodo = false, hasDividir = false;
 
         foreach (var o in offsets)
         {
@@ -102,6 +104,7 @@ public class moveRectangle : MonoBehaviour
                 if (t.tileType == TileType.Type.Orange) hasOrange = true;
                 if (t.tileType == TileType.Type.Creu) hasCreu = true;
                 if (t.tileType == TileType.Type.Rodo) hasRodo = true;
+                if (t.tileType == TileType.Type.Dividir) hasDividir = true;
             }
         }
 
@@ -109,6 +112,7 @@ public class moveRectangle : MonoBehaviour
         if (hasOrange) return TileType.Type.Orange;
         if (hasCreu) return TileType.Type.Creu;
         if (hasRodo) return TileType.Type.Rodo;
+        if (hasDividir) return TileType.Type.Dividir;
 
         return TileType.Type.Normal;
     }
@@ -410,12 +414,19 @@ public class moveRectangle : MonoBehaviour
             }
 
 
-                if (tileType == TileType.Type.Creu)
-               {
+            if (tileType == TileType.Type.Creu)
+            {
                 
                 ActivarPontCreu();
                 //UnityEngine.Debug.Log("ActivarPontCreu");
-               }
+             }
+            if (tileType == TileType.Type.Dividir)
+            {
+
+                Dividir();
+                //UnityEngine.Debug.Log("ActivarPontCreu");
+            }
+
         }
         
         if (tileType == TileType.Type.Rodo)
@@ -440,6 +451,13 @@ public class moveRectangle : MonoBehaviour
 
         if (TryGetButtonUnderCube(out BotoRodo boto))
             boto.TogglePont();
+    }
+
+    void Dividir()
+    {
+
+        if (TryGetButtonUnderCube(out BotoDividir boto))
+            boto.ActivarDividir(this);
     }
 
 

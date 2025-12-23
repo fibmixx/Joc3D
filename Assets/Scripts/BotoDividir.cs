@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BotoDividir : MonoBehaviour
 {
@@ -12,43 +8,27 @@ public class BotoDividir : MonoBehaviour
     public GameObject meitat2;
 
     bool summoned = false;
-    float timer;
 
-    // Start is called before the first frame update
-    void Start()
+    // Mètode que cridarà el rectangle quan està sobre el botó
+    public void ActivarDividir(moveRectangle rect)
     {
-        summoned = false;
-        timer = 0.0f;
+        if (summoned) return;          // cooldown simple
+        if (rect == null) return;
+
+        // Només si està vertical (state == 0)
+        if (rect.state != 0) return;
+
+        summoned = true;
+        rect.selfdestroy();
+
+        Instantiate(meitat1, ubicMeitat1 + new Vector3(0, 0.55f, 0), transform.rotation);
+        Instantiate(meitat2, ubicMeitat2 + new Vector3(0, 0.55f, 0), transform.rotation);
+
+        Invoke(nameof(Reset), 1f);     // poder reutilitzar el bloque separador
     }
 
-    // Update is called once per frame
-    void Update()
+    void Reset()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.up, out hit, 1.0f))
-        {
-            // Intentamos obtener el script del cubo
-            moveRectangle cube = hit.collider.GetComponent<moveRectangle>();
-
-            if (cube != null)        // si lo tiene, es el cubo
-            {
-                if (!summoned) { 
-                    summoned=true;
-                    cube.selfdestroy();
-                    Instantiate(meitat1, ubicMeitat1 + new Vector3(0,0.55f,0), transform.rotation);
-                    Instantiate(meitat2, ubicMeitat2 + new Vector3(0, 0.55f, 0), transform.rotation);
-                }
-            }
-        }
-        if (summoned) //poder reutilziar el bloque separador
-        {
-            timer += Time.deltaTime;
-            if (timer >= 1)
-            {
-                timer = 0;
-                summoned = false;
-            }
-        }
-        
+        summoned = false;
     }
 }
