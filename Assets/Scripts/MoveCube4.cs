@@ -1,17 +1,24 @@
 using System;
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
+using System.ComponentModel;
 // MoveCube manages cube movement. WASD + Cursor keys rotate the cube in the
 // selected direction. If the cube is not grounded (has a tile under it), it falls.
 // Some events trigger corresponding sounds.
+
+
+
 
 
 public class MoveCube : MonoBehaviour
 {
     bool bMoving = false; 			// Is the object in the middle of moving?
 	bool bFalling = false;          // Is the object falling?
-
+    public TileType.Type tileType;
     public bool selected;
 
 	public float rotSpeed; 			// Rotation speed in degrees per second
@@ -212,6 +219,7 @@ public class MoveCube : MonoBehaviour
                     rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
                 }
             }
+            typeOfTile();
         }
         else // un cubo n oseleccionado pueda caer
         {
@@ -222,6 +230,120 @@ public class MoveCube : MonoBehaviour
 				// Play sound associated to falling
                 AudioSource.PlayClipAtPoint(fallSound, transform.position, 1.5f);
             }
+        }
+    }
+
+
+    TileType.Type GetGroundType()
+    {
+        Vector3 pos = transform.position;
+        float rayDist = 1.5f;
+
+        Vector3[] offsets =
+        {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3( 0,      0,  0),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        bool hasOrange = false, hasCreu = false, hasRodo = false, hasDividir = false;
+
+        foreach (var o in offsets)
+        {
+            if (Physics.Raycast(pos + o + Vector3.up * 0.05f, Vector3.down, out RaycastHit hit, rayDist, layerMask))
+            {
+                TileType t = hit.collider.GetComponentInParent<TileType>();
+                if (t == null) continue;
+
+                if (t.tileType == TileType.Type.Orange) hasOrange = true;
+                if (t.tileType == TileType.Type.Creu) hasCreu = true;
+                if (t.tileType == TileType.Type.Rodo) hasRodo = true;
+                if (t.tileType == TileType.Type.Dividir) hasDividir = true;
+            }
+        }
+
+
+        if (hasOrange) return TileType.Type.Orange;
+        if (hasCreu) return TileType.Type.Creu;
+        if (hasRodo) return TileType.Type.Rodo;
+        if (hasDividir) return TileType.Type.Dividir;
+
+        return TileType.Type.Normal;
+    }
+
+    bool TryGetButtonUnderCube<T>(out T button) where T : UnityEngine.Component
+    {
+        Vector3 pos = transform.position;
+        float rayDist = 2.5f;
+
+        Vector3[] offsets =
+        {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3( 0.0f,   0,  0.0f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        foreach (var o in offsets)
+        {
+            // puja una mica l’origen per evitar casos “just al límit”
+            Vector3 origin = pos + o + Vector3.up * 0.05f;
+
+            if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, rayDist, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                button = hit.collider.GetComponentInParent<T>(); // per si el collider és en un fill
+                if (button != null) return true;
+            }
+        }
+
+        button = null;
+        return false;
+    }
+
+
+    void typeOfTile()
+    {
+        tileType = GetGroundType();
+        //UnityEngine.Debug.Log("TileType detectat = " + tileType)
+
+        if (tileType == TileType.Type.Rodo)
+        {
+
+            ActivarPontRodo();
+            //UnityEngine.Debug.Log("ActivarPontRodo");
+        }
+
+    }
+
+
+    void ActivarPontRodo()
+    {
+
+        if (TryGetButtonUnderCube(out BotoRodo boto))
+            boto.TogglePont();
+    }
+
+
+    void desactivarPonts()
+    {
+        BotoCreu[] totsCreu = FindObjectsOfType<BotoCreu>();
+        foreach (var b in totsCreu)
+        {
+            if (b.pont != null)
+                b.pont.SetActive(false);
+        }
+
+        BotoRodo[] totsRodo = FindObjectsOfType<BotoRodo>();
+        foreach (var b in totsRodo)
+        {
+            if (b.pont != null)
+                b.pont.SetActive(false);
+
+            if (b.pont2 != null)
+                b.pont2.SetActive(false);
         }
     }
 

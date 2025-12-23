@@ -9420,7 +9420,7 @@ PrefabInstance:
     - target: {fileID: 7018414693906632336, guid: 2463275594401f343ac173bea0607f37,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.7
+      value: 36.8
       objectReference: {fileID: 0}
     - target: {fileID: 7018414693906632336, guid: 2463275594401f343ac173bea0607f37,
         type: 3}
@@ -12679,6 +12679,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scene Intro
       objectReference: {fileID: 0}
+    - target: {fileID: 914919455745320020, guid: 90419eea5f04b4c49a1bc0aa6a305148,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5451648065196185520, guid: 90419eea5f04b4c49a1bc0aa6a305148,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12778,6 +12783,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860286237772002394, guid: 90419eea5f04b4c49a1bc0aa6a305148,
+        type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
