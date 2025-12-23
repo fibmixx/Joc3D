@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6831bfb1b9e82da4696ec90aad0239da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileType: 0
+  selected: 0
   rotSpeed: 240
   fallSpeed: 10
   sounds:
@@ -129,6 +131,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10b7f35470b5aa44d9e37642cd1fa8a7, type: 3}
   - {fileID: 8300000, guid: 4777373ff62c7a941b137ea300501eeb, type: 3}
   fallSound: {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
+  rectangle: {fileID: 0}
+  myMaterial: {fileID: 0}
 --- !u!114 &6787393243620124394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,14 +147,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bMoving: 0
   bFalling: 0
+  isRectangle: 1
   rotSpeed: 240
   fallSpeed: 10
   sounds:
-  - {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
-  fallSound: {fileID: 8300000, guid: 2b4430ab3b1fe604180fb7133f9b3634, type: 3}
+  - {fileID: 8300000, guid: 2b4430ab3b1fe604180fb7133f9b3634, type: 3}
+  - {fileID: 8300000, guid: 4095d44fbe35bcf48b6aca0f5be89d2b, type: 3}
+  - {fileID: 8300000, guid: 10b7f35470b5aa44d9e37642cd1fa8a7, type: 3}
+  - {fileID: 8300000, guid: 4777373ff62c7a941b137ea300501eeb, type: 3}
+  fallSound: {fileID: 8300000, guid: d8c1fb97941c38f459178cf392a93923, type: 3}
   state: 0
   win: 0
-  nextSceneName: level1
   tileType: 0
 --- !u!114 &3518129628204670893
 MonoBehaviour:
