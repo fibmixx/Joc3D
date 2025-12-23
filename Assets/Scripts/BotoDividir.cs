@@ -21,8 +21,11 @@ public class BotoDividir : MonoBehaviour
         summoned = true;
         rect.selfdestroy();
 
-        Instantiate(meitat1, ubicMeitat1 + new Vector3(0, 0.55f, 0), transform.rotation);
-        Instantiate(meitat2, ubicMeitat2 + new Vector3(0, 0.55f, 0), transform.rotation);
+        Quaternion rot180Y = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+
+        Instantiate(meitat1, ubicMeitat1 + new Vector3(0, 0.55f, 0), rot180Y);
+        Instantiate(meitat2, ubicMeitat2 + new Vector3(0, 0.55f, 0), rot180Y);
+
 
         Invoke(nameof(Reset), 1f);     // poder reutilitzar el bloque separador
     }
