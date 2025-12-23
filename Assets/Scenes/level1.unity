@@ -1027,6 +1027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6831bfb1b9e82da4696ec90aad0239da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileType: 0
   selected: 0
   rotSpeed: 240
   fallSpeed: 10
@@ -1052,6 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bMoving: 0
   bFalling: 0
+  isRectangle: 1
   rotSpeed: 240
   fallSpeed: 10
   sounds:
@@ -3035,7 +3037,7 @@ PrefabInstance:
     - target: {fileID: 914919455745320020, guid: 90419eea5f04b4c49a1bc0aa6a305148,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5451648065196185520, guid: 90419eea5f04b4c49a1bc0aa6a305148,
         type: 3}
