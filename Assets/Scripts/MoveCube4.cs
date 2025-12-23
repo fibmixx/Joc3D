@@ -141,6 +141,7 @@ public class MoveCube : MonoBehaviour
             {
                 transform.RotateAround(rotPoint, rotAxis, rotRemainder * rotDir);
                 bMoving = false;
+                typeOfTile();
             }
             else
             {
@@ -225,7 +226,7 @@ public class MoveCube : MonoBehaviour
                     rotPoint = transform.position + new Vector3(0.0f, -0.5f, -0.5f);
                 }
             }
-            typeOfTile();
+            
         }
         else // un cubo n oseleccionado pueda caer
         {
