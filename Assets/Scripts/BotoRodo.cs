@@ -17,11 +17,8 @@ public class BotoRodo : MonoBehaviour
     {
         activat = !activat;
 
-        if (pont != null && pont2 != null)
-        {
-            pont.SetActive(activat);
-            pont2.SetActive(activat);
-        }
+        if (pont != null) pont.SetActive(activat);
+        if (pont2 != null) pont2.SetActive(activat);
     }
 
     void Update()

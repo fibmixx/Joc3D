@@ -13,11 +13,9 @@ public class BotoCreu : MonoBehaviour
 
     public void TogglePont()
     {
-        activat = !activat;          
+        activat = !activat;
 
-        if (pont != null && pont2 != null){
-            pont.SetActive(true);
-            pont2.SetActive(true);
-        }
+        if (pont != null) pont.SetActive(activat);
+        if (pont2 != null) pont2.SetActive(activat);
     }
 }

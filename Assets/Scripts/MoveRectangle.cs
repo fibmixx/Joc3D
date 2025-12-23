@@ -85,23 +85,34 @@ public class moveRectangle : MonoBehaviour
         {
         new Vector3( 0.495f, 0,  0.495f),
         new Vector3( 0.495f, 0, -0.495f),
-        new Vector3( 0, 0, 0),
+        new Vector3( 0,      0,  0),
         new Vector3(-0.495f, 0,  0.495f),
         new Vector3(-0.495f, 0, -0.495f),
     };
 
+        bool hasOrange = false, hasCreu = false, hasRodo = false;
+
         foreach (var o in offsets)
         {
-            if (Physics.Raycast(pos + o, Vector3.down, out RaycastHit hit, rayDist, layerMask))
+            if (Physics.Raycast(pos + o + Vector3.up * 0.05f, Vector3.down, out RaycastHit hit, rayDist, layerMask))
             {
-                TileType t = hit.collider.GetComponent<TileType>();
-                if (t != null)
-                    return t.tileType;
+                TileType t = hit.collider.GetComponentInParent<TileType>();
+                if (t == null) continue;
+
+                if (t.tileType == TileType.Type.Orange) hasOrange = true;
+                if (t.tileType == TileType.Type.Creu) hasCreu = true;
+                if (t.tileType == TileType.Type.Rodo) hasRodo = true;
             }
         }
 
+        
+        if (hasOrange) return TileType.Type.Orange;
+        if (hasCreu) return TileType.Type.Creu;
+        if (hasRodo) return TileType.Type.Rodo;
+
         return TileType.Type.Normal;
     }
+
 
     public static event Action OnRestart;
     void Restart()
@@ -348,15 +359,47 @@ public class moveRectangle : MonoBehaviour
                         lastMove = 3;
                     }
                 }
-                UnityEngine.Debug.Log(nextstate);
+                //UnityEngine.Debug.Log(nextstate);
                 //Debug.Log(lastMove);
             }
         }
     }
+
+    bool TryGetButtonUnderCube<T>(out T button) where T : Component
+    {
+        Vector3 pos = transform.position;
+        float rayDist = 2.5f;
+
+        Vector3[] offsets =
+        {
+        new Vector3( 0.495f, 0,  0.495f),
+        new Vector3( 0.495f, 0, -0.495f),
+        new Vector3( 0.0f,   0,  0.0f),
+        new Vector3(-0.495f, 0,  0.495f),
+        new Vector3(-0.495f, 0, -0.495f),
+    };
+
+        foreach (var o in offsets)
+        {
+            // puja una mica l’origen per evitar casos “just al límit”
+            Vector3 origin = pos + o + Vector3.up * 0.05f;
+
+            if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, rayDist, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                button = hit.collider.GetComponentInParent<T>(); // per si el collider és en un fill
+                if (button != null) return true;
+            }
+        }
+
+        button = null;
+        return false;
+    }
+
+
     void typeOfTile()
     {
         tileType = GetGroundType();
-        //UnityEngine.Debug.Log("TileType detectat = " + tileType);
+        UnityEngine.Debug.Log("TileType detectat = " + tileType);
 
         if (state == 0)
         {
@@ -369,58 +412,34 @@ public class moveRectangle : MonoBehaviour
 
                 if (tileType == TileType.Type.Creu)
                {
-                //UnityEngine.Debug.Log("ActivarPontCreu");
+                
                 ActivarPontCreu();
+                //UnityEngine.Debug.Log("ActivarPontCreu");
                }
         }
         
         if (tileType == TileType.Type.Rodo)
         {
-                //UnityEngine.Debug.Log("ActivarPontRodo");
+                
                 ActivarPontRodo();
+            //UnityEngine.Debug.Log("ActivarPontRodo");
         }
         
     }
 
     void ActivarPontCreu()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, layerMask))
-        {
-            BotoCreu boto = hit.collider.GetComponent<BotoCreu>();
-            if (boto != null)
-            {
-                boto.TogglePont();
-            }
-        }
+        if (TryGetButtonUnderCube(out BotoCreu boto))
+            boto.TogglePont();
 
-       
+
     }
 
     void ActivarPontRodo()
     {
-        Vector3 pos = transform.position;
-        float rayDist = 2f;
 
-        Vector3[] offsets =
-        {
-        new Vector3( 0.495f, 0,  0.495f),
-        new Vector3( 0.495f, 0, -0.495f),
-        new Vector3(-0.495f, 0,  0.495f),
-        new Vector3(-0.495f, 0, -0.495f),
-        };
-
-        foreach (var o in offsets)
-        {
-            if (Physics.Raycast(pos + o, Vector3.down, out RaycastHit hit, rayDist))
-            {
-                BotoRodo boto = hit.collider.GetComponent<BotoRodo>();
-                if (boto != null)
-                {
-                    boto.TogglePont();
-                    return; // ja hem trobat un botó, sortim
-                }
-            }
-        }
+        if (TryGetButtonUnderCube(out BotoRodo boto))
+            boto.TogglePont();
     }
 
 
