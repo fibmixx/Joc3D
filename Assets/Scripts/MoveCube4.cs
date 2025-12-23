@@ -72,7 +72,7 @@ public class MoveCube : MonoBehaviour
         for (int i = 0; i < dirs.Length; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, dirs[i], out hit, 1f))
+            if (Physics.Raycast(transform.position + Vector3.up * 0.05f, dirs[i], out hit, 1.1f, ~0, QueryTriggerInteraction.Ignore))
             {
                 MoveCube cube = hit.collider.GetComponent<MoveCube>();
                 if (cube != null && cube != this)
@@ -104,6 +104,9 @@ public class MoveCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        saltarLevel();
+
         if (Input.GetKeyDown(KeyCode.Space)) {
             selected = !selected;
              if (myMaterial.GetFloat("_Scale") == 1)   myMaterial.SetFloat("_Scale", 1.08f);
@@ -145,9 +148,11 @@ public class MoveCube : MonoBehaviour
                 rotRemainder -= amount;
             }
         }
-        else if (otherCube!=null && !hasmerged)
+        else if (selected && otherCube != null && !hasmerged && !otherCube.hasmerged)
+
         {
             hasmerged = true;
+            otherCube.hasmerged = true;
             StartCoroutine(Esperar());
             if (selected)
             {
@@ -163,6 +168,7 @@ public class MoveCube : MonoBehaviour
                     else mr.state = 1;
                 }
             }
+            Destroy(otherCube.gameObject, 0.2f);
             Destroy(gameObject, 0.2f);
         }
         else if (selected)
@@ -346,5 +352,36 @@ public class MoveCube : MonoBehaviour
                 b.pont2.SetActive(false);
         }
     }
+    void saltarLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SceneManager.LoadScene(1);
 
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SceneManager.LoadScene(2);
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SceneManager.LoadScene(3);
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            SceneManager.LoadScene(4);
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            SceneManager.LoadScene(5);
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            SceneManager.LoadScene(6);
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            SceneManager.LoadScene(7);
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            SceneManager.LoadScene(8);
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            SceneManager.LoadScene(9);
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SceneManager.LoadScene(10);
+    }
 }

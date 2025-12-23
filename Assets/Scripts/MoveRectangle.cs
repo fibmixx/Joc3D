@@ -195,8 +195,14 @@ public class moveRectangle : MonoBehaviour
             } 
             if (timer >= 3.0f)
             {
-                timer = 0f; 
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                timer = 0f;
+
+                int idx = SceneManager.GetActiveScene().buildIndex;
+
+                if (idx == 10)
+                    SceneManager.LoadScene("ending");     
+                else
+                    SceneManager.LoadScene(idx + 1);
             }
         }
         else if (bMoving)
