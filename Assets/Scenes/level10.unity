@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 5331440}
   - component: {fileID: 5331439}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 137036223}
   - component: {fileID: 137036222}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226394699}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64ccdb20fa9bd964ca3419dd21ce8096, type: 3}
   m_Name: 
@@ -938,7 +938,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1947,7 +1947,6 @@ GameObject:
   - component: {fileID: 320960754}
   - component: {fileID: 320960753}
   - component: {fileID: 320960752}
-  - component: {fileID: 320960751}
   m_Layer: 3
   m_Name: creu (1)
   m_TagString: Untagged
@@ -1972,20 +1971,6 @@ Transform:
   - {fileID: 1015356149}
   m_Father: {fileID: 975870475}
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
---- !u!114 &320960751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320960749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ccdb20fa9bd964ca3419dd21ce8096, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pont: {fileID: 0}
-  pont2: {fileID: 0}
 --- !u!65 &320960752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2446,7 +2431,7 @@ GameObject:
   - component: {fileID: 369402907}
   - component: {fileID: 369402906}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2678,7 +2663,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384519728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64ccdb20fa9bd964ca3419dd21ce8096, type: 3}
   m_Name: 
@@ -3433,7 +3418,7 @@ GameObject:
   - component: {fileID: 513995880}
   - component: {fileID: 513995879}
   m_Layer: 3
-  m_Name: creu 1(Clone)
+  m_Name: creu 1(Clone)2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3804,7 +3789,7 @@ GameObject:
   - component: {fileID: 533415381}
   - component: {fileID: 533415380}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4418,7 +4403,7 @@ GameObject:
   - component: {fileID: 674265733}
   - component: {fileID: 674265732}
   m_Layer: 3
-  m_Name: creu 1(Clone)
+  m_Name: creu 1(Clone)6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5465,7 +5450,7 @@ GameObject:
   - component: {fileID: 796848781}
   - component: {fileID: 796848780}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5656,7 +5641,7 @@ GameObject:
   - component: {fileID: 845059695}
   - component: {fileID: 845059694}
   m_Layer: 3
-  m_Name: cilindre(Clone)
+  m_Name: cilindre(Clone)1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6346,7 +6331,7 @@ GameObject:
   - component: {fileID: 975870477}
   - component: {fileID: 975870476}
   m_Layer: 3
-  m_Name: creu 1(Clone)
+  m_Name: creu 1(Clone)3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6447,7 +6432,7 @@ GameObject:
   - component: {fileID: 982227714}
   - component: {fileID: 982227713}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6475,7 +6460,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982227711}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6446be20565d31044b8fc6a7af170943, type: 3}
   m_Name: 
@@ -6583,7 +6568,7 @@ GameObject:
   - component: {fileID: 1005480534}
   - component: {fileID: 1005480533}
   m_Layer: 3
-  m_Name: cilindre(Clone)
+  m_Name: cilindre(Clone)5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9001,7 +8986,7 @@ GameObject:
   - component: {fileID: 1430323768}
   - component: {fileID: 1430323767}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9406,7 +9391,7 @@ GameObject:
   - component: {fileID: 1530773502}
   - component: {fileID: 1530773501}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9434,7 +9419,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530773499}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6446be20565d31044b8fc6a7af170943, type: 3}
   m_Name: 
@@ -9542,7 +9527,7 @@ GameObject:
   - component: {fileID: 1566564837}
   - component: {fileID: 1566564836}
   m_Layer: 3
-  m_Name: cilindre(Clone)
+  m_Name: cilindre(Clone)4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10098,7 +10083,7 @@ GameObject:
   - component: {fileID: 1714088748}
   - component: {fileID: 1714088747}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11001,7 +10986,7 @@ GameObject:
   - component: {fileID: 1899931179}
   - component: {fileID: 1899931178}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11917,7 +11902,7 @@ GameObject:
   - component: {fileID: 2127827473}
   - component: {fileID: 2127827472}
   m_Layer: 3
-  m_Name: TilePont(Clone)
+  m_Name: p5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12048,7 +12033,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
@@ -12058,7 +12043,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
