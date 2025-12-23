@@ -327,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b54e777905e0d41b7572c0ba893fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ubicMeitat1: {x: 0, y: 0, z: 0}
-  ubicMeitat2: {x: 1, y: 1, z: 1}
+  ubicMeitat1: {x: 16, y: 0, z: 3}
+  ubicMeitat2: {x: 14, y: 0, z: 1}
   meitat1: {fileID: 5639756454878238042, guid: 320f1c8f4db31884884e8dbeba1fbfc6, type: 3}
   meitat2: {fileID: 3476344922193987004, guid: f31cb9418a00c5e4a8906124a7d04e69, type: 3}
 --- !u!114 &48747424
@@ -11762,7 +11762,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
@@ -11772,7 +11772,7 @@ PrefabInstance:
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2084690736055986671, guid: 9a02f0f62bedf1b4abb702198194bfe6,
         type: 3}

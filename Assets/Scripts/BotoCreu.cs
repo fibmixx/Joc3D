@@ -17,5 +17,25 @@ public class BotoCreu : MonoBehaviour
 
         if (pont != null) pont.SetActive(activat);
         if (pont2 != null) pont2.SetActive(activat);
+        UnityEngine.Debug.Log("ActivarPontRodo");
+    }
+    void Update()
+    {
+
+    }
+    void OnEnable()
+    {
+        moveRectangle.OnRestart += HandleRestart;
+    }
+
+    void OnDisable()
+    {
+        moveRectangle.OnRestart -= HandleRestart;
+    }
+
+    void HandleRestart()
+    {
+        activat = true;
+        TogglePont();
     }
 }

@@ -424,7 +424,7 @@ public class moveRectangle : MonoBehaviour
             {
 
                 Dividir();
-                //UnityEngine.Debug.Log("ActivarPontCreu");
+                
             }
 
         }
@@ -442,6 +442,7 @@ public class moveRectangle : MonoBehaviour
     {
         if (TryGetButtonUnderCube(out BotoCreu boto))
             boto.TogglePont();
+        
 
 
     }
